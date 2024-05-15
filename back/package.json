@@ -1,0 +1,30 @@
+{
+  "name": "node.js-a2.1-b-cats",
+  "version": "1.0.0",
+  "description": "Initialisation du projet",
+  "main": "index.js",
+  "scripts": {
+    "test": "bonjour",
+    "dev": "node --watch index.js",
+    "serve": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IIM-Creative-Technology/Node.js-A2.1-B-cats.git"
+  },
+  "author": "Ethan.delcroix@edu.devinci.fr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IIM-Creative-Technology/Node.js-A2.1-B-cats/issues"
+  },
+  "homepage": "https://github.com/IIM-Creative-Technology/Node.js-A2.1-B-cats#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "http": "^0.0.1-security",
+    "mongodb": "^4.13.0",
+    "node": "^18.13.0",
+    "sass": "^1.57.1",
+    "socket.io": "^4.5.4"
+  }
+}

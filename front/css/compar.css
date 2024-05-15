@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-image: url("../img/default_2019-11-20_21e7b647-7774-4b5e-ab44-f76606656036.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+header {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(10px);
+  height: 10vh;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+header nav {
+  width: 100%;
+}
+header nav ul {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+header nav ul li {
+  list-style: none;
+}
+header nav ul li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#BatleArea {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  gap: 75px;
+}
+#BatleArea img {
+  width: 25vh;
+  height: auto;
+}
+#BatleArea #figth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10vh;
+  width: 20%;
+}
+#BatleArea #figth .placeolder {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+#BatleArea #figth #fitghbtn:hover {
+  cursor: pointer;
+}
+#BatleArea .buttond {
+  border: red solid 2px;
+  background: white;
+  padding: 2px 7px;
+  border-radius: 15px;
+}
+#BatleArea .myteams {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 135px;
+  border-radius: 15px;
+  border: red 2px solid;
+  background: white;
+}
+#BatleArea .myteams img {
+  width: 120px;
+  height: 120px;
+}
+#BatleArea .yourteams {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 130px;
+  border-radius: 15px;
+  border: red 2px solid;
+  background: white;
+}
+#BatleArea .yourteams img {
+  width: 120px;
+  height: 120px;
+}
+#BatleArea #myteam {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+#BatleArea #yourteam {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+/*# sourceMappingURL=compar.css.map */

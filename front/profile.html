@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/profile.css">
+    <title>Title</title>
+
+
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li>
+                <a href="profile.html">Profile</a>
+            </li>
+            <li>
+                <a href="pc.html">PC</a>
+            </li>
+            <li>
+                <a href="comparaison.html">Comparaison</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <div class="profile">
+        <h1>Profile</h1>
+        <div class="img">
+
+            <img id="Pimg">
+            <br>
+            <button onclick="seeform(1)">Modifier</button>
+        </div>
+        <form method="post" id="pokemon">
+            <input type="text" name="changepoke" id="Nimg">
+            <input type="submit" name="submit" id="1" onclick="sendform(1)">
+        </form>
+        <br>
+
+        <div>
+
+
+            <h3 id="Pprenom"> Mon prenom</h3>
+
+            <button onclick="seeform(3)">Modifier</button>
+
+        </div>
+        <form method="post" id="prenom">
+            <input type="text" name="changeprenom" id="Nprenom">
+            <input type="submit" name="submit" id="3" onclick="sendform(3)">
+        </form>
+        <button onclick="btn()">Déconnexion</button>
+        <button onclick="deletes()">Supprimer le compte</button>
+    </div>
+
+    <div class="getTeam">
+
+    </div>
+
+</main>
+<footer></footer>
+<script src="http://localhost:3000/logout/"></script>
+<script src="script/profile.js"></script>
+</body>
+</html>

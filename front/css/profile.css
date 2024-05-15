@@ -1,0 +1,117 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 100px;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f2f2f2;
+}
+
+header {
+  background-color: #fff;
+  height: 10vh;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: fixed;
+}
+header nav {
+  width: 100%;
+}
+header nav ul {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+header nav ul li {
+  list-style: none;
+}
+header nav ul li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+main {
+  display: flex;
+  padding-top: 10vh;
+  height: 90vh;
+}
+main .profile {
+  text-align: center;
+  width: 50%;
+  height: 90vh;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+main .profile div {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+main .profile .img {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+main .profile .img img {
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+}
+main .profile form {
+  display: none;
+}
+main .profile form input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 0 10px;
+  margin: 10px 0;
+}
+main .profile button {
+  width: 100px;
+  height: 30px;
+  border: none;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+main .profile button:hover {
+  background-color: #f2f2f2;
+}
+main .profile .activeform {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+main div:nth-of-type(2) {
+  width: 100%;
+}
+
+/*# sourceMappingURL=profile.css.map */

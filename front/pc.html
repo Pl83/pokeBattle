@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/pc.css">
+  <title>pc</title>
+</head>
+<body>
+<header>
+  <nav>
+    <ul>
+      <li>
+        <a href="index.html">Home</a>
+      </li>
+      <li>
+        <a href="profile.html">Profile</a>
+      </li>
+      <li>
+        <a href="pc.html">PC</a>
+      </li>
+      <li>
+        <a href="comparaison.html">Comparaison</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="PcGlobal">
+    <aside class="PcAsside">
+      <div class="PcAssideOne">
+        <label for="pokemon-search">Find a pokemon:</label>
+        <input list="subject" id="pokemon-search">
+          <datalist id="subject">
+              <script>
+                fetch('https://pokeapi.co/api/v2/pokemon/?limit=1008')
+                .then(response => response.json())
+                  .then(data => {
+                    //console.log(data)
+                    data.results.forEach(pokemon => {
+                      //console.log(pokemon.name)
+                      document.getElementById('subject').innerHTML += `<option value="${pokemon.name}">`
+                    })
+                  })
+              </script>
+          </datalist>
+          <button class="pcGet" onclick="getValue()"> Get </button><button class="PcADD ninja iolisten" onclick="AddPokemon()"> ADD</button>
+          <div class="imgsearchpoke">
+            
+            
+          </div>
+      </div>
+      <div class="PcAssideTwo">
+        <div class="teams">
+          <div class="team">
+            <div class=" styling solo"></div>
+            <button onclick="DeletePokemon(this)" class="iolisten solobtn ninja">Delete</button>
+          </div>
+          <div class="team">
+            <div class=" styling solo"></div>
+            <button onclick="DeletePokemon(this)" class="iolisten solobtn ninja">Delete</button>
+          </div>
+          <div class="team">
+            <div class=" styling solo "></div>
+            <button onclick="DeletePokemon(this)" class="iolisten solobtn ninja">Delete</button>
+          </div>
+          <div class="team">
+            <div class=" styling solo "></div>
+            <button onclick="DeletePokemon(this)" class="iolisten solobtn ninja">Delete</button>
+          </div>
+          <div class="team">
+            <div class=" styling solo"></div>
+            <button onclick="DeletePokemon(this)" class="iolisten solobtn ninja">Delete</button>
+          </div>
+          <div class="team">
+            <div class=" styling solo"></div>
+            <button onclick="DeletePokemon(this)" class="iolisten solobtn ninja">Delete</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <main class="PcMain">
+      <div class="boxarea"></div>
+    </main>
+    <footer class="PcFooter">
+      <h1>Global chat</h1>
+      <div class="rowing">
+        <div>
+          <input type="text" id="contentmessage">
+          <button class="btnsock">Send</button>
+        </div>
+        <ul class="showmessagedata">
+  
+        </ul>
+      </div>
+    </footer>
+  </section>
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <script src="script/script.js"></script>
+</body>
+</html>
