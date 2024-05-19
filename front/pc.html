@@ -28,7 +28,7 @@
 </header>
   <section class="PcGlobal">
     <aside class="PcAsside">
-      <div class="PcAssideOne">
+      <!-- <div class="PcAssideOne">
         <label for="pokemon-search">Find a pokemon:</label>
         <input list="subject" id="pokemon-search">
           <datalist id="subject">
@@ -49,32 +49,34 @@
             
             
           </div>
-      </div>
+      </div> -->
+      <div class="popupStatus"></div>
+      <div class="overlay"></div>
       <div class="PcAssideTwo">
         <div class="teams">
           <div class="team">
-            <div class=" styling solo"></div>
-            <button onclick="DeletePokemon(this)" class="iolisten solobtn ninja">Delete</button>
+            <div class="slot styling solo"></div>
+
           </div>
           <div class="team">
-            <div class=" styling solo"></div>
-            <button onclick="DeletePokemon(this)" class="iolisten solobtn ninja">Delete</button>
+            <div class="slot  styling solo" ></div>
+            
           </div>
           <div class="team">
-            <div class=" styling solo "></div>
-            <button onclick="DeletePokemon(this)" class="iolisten solobtn ninja">Delete</button>
+            <div class="slot  styling solo" ></div>
+            
           </div>
           <div class="team">
-            <div class=" styling solo "></div>
-            <button onclick="DeletePokemon(this)" class="iolisten solobtn ninja">Delete</button>
+            <div class="slot  styling solo"  ></div>
+            
           </div>
           <div class="team">
-            <div class=" styling solo"></div>
-            <button onclick="DeletePokemon(this)" class="iolisten solobtn ninja">Delete</button>
+            <div class="slot styling solo" ></div>
+            
           </div>
           <div class="team">
-            <div class=" styling solo"></div>
-            <button onclick="DeletePokemon(this)" class="iolisten solobtn ninja">Delete</button>
+            <div class="slot  styling solo" ></div>
+            
           </div>
         </div>
       </div>
@@ -87,7 +89,7 @@
       <div class="rowing">
         <div>
           <input type="text" id="contentmessage">
-          <button class="btnsock">Send</button>
+          <button class="btnsock" onclick="sendMessage()">Send</button>
         </div>
         <ul class="showmessagedata">
   
@@ -95,7 +97,8 @@
       </div>
     </footer>
   </section>
-  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+  <script src="script/auth.js"></script>
   <script src="script/script.js"></script>
 </body>
 </html>

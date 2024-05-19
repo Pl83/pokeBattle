@@ -1,50 +1,62 @@
+localStorage.clear();
+
 function register(){
+
     let user = document.querySelector("#userr").value;
     let password = document.querySelector("#passe").value;
-
-    const pokfa= document.querySelector("#favor").value;
-    console.log(pokfa);
-
+    let pokfa= document.querySelector("#favor").value;
+    let pokeTeam = {1: '', 2: '', 3: '', 4: '', 5: '', 6: ''};
+    let genre = 'humain'
+    let data = JSON.stringify({user: user, password: password ,pokefavs: pokfa, poketeam: pokeTeam, genre: genre})
 
     fetch('http://localhost:3000/register', {
-        method: "POST",
-
+        method: "GET",
         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
+            'Content-Type': 'application/json;charset=utf-8',
+            'data': data
+        }
+    }).then(response => response.json())
+    .then(data => {
 
-        body: JSON.stringify({user: user, passwords: password ,pokefavs: pokfa})
+        if (data.sucess){
+            let user = data.sucess;
+            console.log(user);
+            user = JSON.stringify(user);
+            localStorage.setItem('PokeTrainer', user);
+            window.location.href = "index.html";
+        } else {
+            alert(data.sucess);
+        }
+    });
 
-
-    })
 }
 
-console.log("bonjour");
+
 function login(){
-    let Rpassword = document.querySelector("#passe").value;
-    const pokfav= document.querySelector("#favor").value;
+
     let user = document.querySelector("#userl").value;
     let password = document.querySelector("#pass").value;
 
+    let data = JSON.stringify({user: user, password: password})
+
     fetch('http://localhost:3000/login/', {
-        method: "POST",
-
+        method: "GET",
         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
+            'Content-Type': 'application/json;charset=utf-8',
+            'data': data
+        }
 
-        body: JSON.stringify({user: user, password: password})
-
-    })
-
-    console.log(password)
-    if (Rpassword == password && password.length > 0){
-        console.log("mot de passe correct");
-        localStorage.setItem('pseudo', user);
-        localStorage.setItem('favpokemon', pokfav);
-        document.location.href = "index.html";
-    }
-    else{
-        alert("mot de passe incorrect");
-    }
+    }).then(response => response.json())
+    .then(data => {
+        if (data.sucess){
+            let user = data.sucess;
+            console.log(user);
+            user = JSON.stringify(user);
+            localStorage.setItem('PokeTrainer', user);
+            window.location.href = "index.html";
+        } else {
+            alert('User or password incorrect');
+        }
+    });
+        
 }

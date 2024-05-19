@@ -1,4 +1,4 @@
-
+localStorage.removeItem('room');
 //FRONT
 
 let prenom = document.getElementById("prenom");
