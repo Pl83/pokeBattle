@@ -1,26 +1,22 @@
-const { MongoClient } = require("mongodb");
+import { MongoClient } from "mongodb";
 
 // Replace the uri string with your connection string.
-const uri =
-    "mongodb+srv://test:1234@cluster0.dya1mju.mongodb.net/?retryWrites=true&w=majority";
+const uri ="mongodb+srv://admin:LehoPiMBzUP7rnkd@pokebattle.1lrolqw.mongodb.net/?retryWrites=true&w=majority&appName=pokebattle";
 
 const client = new MongoClient(uri);
 
+const collectionUser = client.db("pokebattle").collection("user");
+
 async function run() {
-    try {
-        const database = client.db('user');
 
-        // Query for a movie that has the title 'Back to the Future'
-        const col = db.collection("user");
+    await client.connect();
 
-        const ok = await database.collection('profile').find({}).toArray();
+    await client.db("admin").command({ ping: 1 });
 
-        console.log(ok);
-    } finally {
-        // Ensures that the client will close when you finish/error
-        await client.close();
-    }
-
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
 }
+
 run().catch(console.dir);
+
+export {client, collectionUser};

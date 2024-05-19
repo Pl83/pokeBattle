@@ -2,6 +2,7 @@
   "name": "node.js-a2.1-b-cats",
   "version": "1.0.0",
   "description": "Initialisation du projet",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "bonjour",
@@ -19,12 +20,16 @@
   },
   "homepage": "https://github.com/IIM-Creative-Technology/Node.js-A2.1-B-cats#readme",
   "dependencies": {
+    "bad-words": "^3.0.4",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "french-badwords-list": "^1.0.7",
     "http": "^0.0.1-security",
+    "ip": "^2.0.1",
     "mongodb": "^4.13.0",
     "node": "^18.13.0",
     "sass": "^1.57.1",
-    "socket.io": "^4.5.4"
+    "socket.io": "^4.5.4",
+    "swear-shield": "^1.0.4"
   }
 }

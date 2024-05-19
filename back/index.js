@@ -1,99 +1,240 @@
-const express = require('express');
-const cors = require('cors');
-const http = require('http');
+import express from 'express';
+import http from 'http';
+import ip from 'ip';
+import { Server } from 'socket.io';
+import cors from 'cors';
+import { client, collectionUser } from './connect.js';
+import badWords from './lang.json'  assert { type: "json" };
+
 const app = express();
-const {Server} = require("socket.io");
+const server = http.createServer(app);
+const PORT = 3000;
+const io = new Server(server, {
+    cors: {
+        origin: '*',
+        }
+})
 
-const httpServer = http.createServer(app);
+let rooms = [];
 
-const port = 3000;
+// Function to escape special characters in regex
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+  
+// Function to replace bad words in a string with asterisks
+function censorBadWords(inputString) {
+    let censoredString = inputString;
 
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://test:1234@cluster0.dya1mju.mongodb.net/?retryWrites=true&w=majority\n";
-const client = new MongoClient(uri, { useNewUrlParser: true });
+    badWords.words.forEach(badWord => {
+    // Escape any special characters in the bad word
+    const escapedBadWord = escapeRegExp(badWord);
+    // Create a regular expression for the bad word, case insensitive
+    const regex = new RegExp(`\\b${escapedBadWord}\\b`, 'gi');
+    // Replace the bad word with asterisks
+    censoredString = censoredString.replace(regex, '*'.repeat(badWord.length));
+    });
+
+    return censoredString;
+}
+
+app.use(cors())
+
+app.get('/', (req, res) => {
+    res.json('ip address: http://' + ip.address()+':'+PORT);    
+});
+
+app.get('/register', async (req, res) => {
+    console.log('register');
 
 
+    try {
 
+        let data = JSON.parse(req.headers.data);
+        let dataUsers = data.user;
 
-const io = new Server(httpServer, {
-    cors : {
-        origin : '*'
+        let password = data.password;
+
+        let pokfav = data.pokefavs;
+
+        let poketeam = data.poketeam;
+
+        let genre = data.genre;
+
+        let userExist = await collectionUser.findOne({user: dataUsers});
+    
+        if (userExist){
+            res.json(false);
+            return
+        }
+
+        await collectionUser.insertOne({user: dataUsers, password: password, pokefav: pokfav, poketeam: poketeam, genre: genre});
+
+        let user = await collectionUser.findOne({user: dataUsers , password: password});
+        delete user.password;
+        delete user._id;
+        console.log(user);
+        res.json({'sucess': user});
+        return 
+    } catch (error) {
+        console.log(error);
+        res.status(404).json(error);
+        return 
+    }
+
+});
+
+app.get('/login', async (req, res) => {
+    console.log('login');
+
+    let data = JSON.parse(req.headers.data);
+    let user = data.user;
+    let password = data.password;
+
+    try {
+        let userExist = await collectionUser.findOne({user: user, password: password});
+
+        if (userExist){
+            delete userExist.password;
+            delete userExist._id;
+            res.json({'sucess': userExist});
+            return
+        } else {
+            res.json(false);
+            return
+        }
+    } catch (error) {
+        res.status(404).json(error);
+        return
     }
 });
 
-// middelware
-app.use(express.json());
-app.use(cors());
+app.get('/myTeam', async (req, res) => {
+    console.log('myTeam');
 
-// routes
-
-io.on("connection", (socket) => {
-  console.log('socketdataid log');
-  console.log(socket)
-  socket.on("message", (data) => {
-    console.log('socketdata log');
+    let data = JSON.parse(req.headers.data);
     console.log(data);
-    io.emit("Sendfront", data)
-  })
-  socket.on("pokemonData", function(data) {
-    console.log("Received pokemon data:", data);
-    io.emit("pokemonData", data);
+    let Datauser = data.user;
+    let Newpoketeam = data.poketeam;
+
+
+    try {
+        let userExist = await collectionUser.findOne({user: Datauser});
+
+        if (userExist){
+            console.log('userExist');
+            await collectionUser.updateOne({user: Datauser}, {$set: {poketeam: Newpoketeam}});
+            let user = await collectionUser.findOne({user: Datauser});
+            delete user.password;
+            delete user._id;
+            res.json({'sucess': user});
+            return
+        } else {
+            res.json(false);
+            return
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(404).json(error);
+        return
+    }
+
+});
+
+app.get('/updateprofile', async (req, res) => {
+    console.log('updateprofile');
+
+    let data = JSON.parse(req.headers.data);
+    let Olduser = data.user;
+    let Newuser = data.newuser;
+    let Newpokfav = data.pokefav;
+    let genre = data.genre;
+
+    try {
+        let userExist = await collectionUser.findOne({user: Olduser});
+
+        if (userExist){
+            await collectionUser.updateOne({user: Olduser}, {$set: {user: Newuser, pokefav: Newpokfav, genre: genre}});
+            let user = await collectionUser.findOne({user: Newuser});
+            delete user.password;
+            delete user._id;
+            res.json({'sucess': user});
+            return
+        } else {
+            res.json(false);
+            return
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(404).json(error);
+        return
+    }
+});
+
+app.get('/rooms', (req, res) => {
+    res.json(rooms);
+    return
+});
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    console.log(socket.id);
+    socket.broadcast.emit('user connected');
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+        socket.broadcast.emit('user disconnected');
     });
+    socket.on('message', (msg) => {
+        console.log('message: ' + msg);
+        msg = censorBadWords(msg);
+        socket.broadcast.emit('message', msg);
+    });
+    
+    socket.on('room', (room, msg) => {
+        console.table(room);
+        console.log(msg);
+        //io.to(room).emit('message', msg);
+        socket.join(room);
+        rooms.push(room);
+        socket.emit('all rooms', rooms);
+    });
+
+
+    socket.on('join', (room) => {
+        console.log('join room: ' + room);
+        socket.join(room);
+        io.to(room).emit('join', room);
+        //check the number of user in the room, if 2 remove the room from the list
+        console.log(io.sockets.adapter.rooms.get(room).size)
+        if (io.sockets.adapter.rooms.get(room).size == 2){
+            console.log('2 users in the room');
+
+            io.to(room).emit('getAdversary')
+            socket.on('sendAdversary', (adversary) => {
+                console.log('suis la');
+                console.log(adversary);
+                socket.broadcast.emit('returnAdversary', adversary);
+            });
+        }
+        socket.on('fix', (player, trainer) => {
+            console.log('fix');
+            console.log(player);
+            console.log(trainer);
+            io.to(room).emit('fixed', player, trainer);
+        });
+    });
+
+    
+
+    socket.on('leave', (room) => {
+        console.log('leave room: ' + room);
+        socket.leave(room);
+        io.to(room).emit('leave', room);
+    });
+
 })
 
-app.post('/login/', (req, res) => {
-    console.log(req.body);
-    console.log(req.body.user)
-    console.log(req.body.password)
-    res.json({user: req.body.user , pokes: req.body.pokfav});
-});
-app.post('/register/', (req, res) => {
 
-
-
-    const username = req.body.user;
-    const pokefa = req.body.pokefavs;
-    const password = req.body.passwords;
-    console.log(pokefa);
-
-
-    client.connect(err => {
-        const collection = client.db("user").collection("profile");
-        collection.insertOne({ username: username, pokefav: pokefa, password: password }, function(err, res) {
-            console.log("User created");
-            client.close();
-        });
-    });
-
-
-});
-
-
-
-app.get('/logout/', (req, res) => {
-    console.log("vous etes deconnecté");
-    res.json({msg: "suppresion de compte"});
-});
-
-app.delete('/delete/', (req, res) => {
-
-
-    client.connect(err => {
-        const collection = client.db("user").collection("profile");
-        const connectedUserId = req.body.user;
-        console.log(connectedUserId);
-        collection.deleteOne({ username: connectedUserId }, function(err, res) {
-            console.log("Connected user's document deleted");
-            client.close();
-        });
-    });
-
-});
-
-httpServer.listen(port, () => {
-  console.log(`On écoute le port n°${port}`)
-});
-
-
-console.log(app)  
-
+server.listen(PORT, () => {
+    console.log('Server ip : http://' +ip.address() +":" + PORT);
+})
